@@ -1,0 +1,11 @@
+[package]
+name = "gmtk2024"
+version = "0.1.0"
+edition = "2021"
+authors = ["SarahGreyWolf <m.sarahgreywolf@outlook.com>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master", version = "0.1.3", features = ["experimental-wasm", "lazy-function-tables"] }
