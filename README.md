@@ -2,9 +2,9 @@
 Entry for GMTK 2024 with the theme "Built to Scale"
 
 ## Details
-Engine: Godot
+Engine: Godot\
 Language: Rust
 
 ## Creators
-Programming, Design, Scene Creation: SarahGreyWolf
+Programming, Design, Scene Creation: SarahGreyWolf\
 Art & Design: Donny Downer
