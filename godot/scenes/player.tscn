@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://kmq1yajx4ula"]
+
+[ext_resource type="Texture2D" uid="uid://cxgsg3055g8b" path="res://textures/player/guy1.png" id="1_qdvgu"]
+[ext_resource type="Texture2D" uid="uid://bwho1ytugkt8d" path="res://textures/player/guy2.png" id="2_fkndo"]
+[ext_resource type="Texture2D" uid="uid://byulycwlv7aqt" path="res://textures/player/guy_jump.png" id="3_mb20w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1yro"]
+size = Vector2(254, 471)
+
+[sub_resource type="Animation" id="Animation_b2qu4"]
+resource_name = "Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("1_qdvgu"), ExtResource("2_fkndo")]
+}
+
+[sub_resource type="Animation" id="Animation_cm2mt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_qdvgu")]
+}
+
+[sub_resource type="Animation" id="Animation_w2545"]
+resource_name = "Jumping"
+length = 0.1
+step = 0.0001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.02),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_mb20w")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ws25v"]
+_data = {
+"Idle": SubResource("Animation_b2qu4"),
+"Jump": SubResource("Animation_w2545"),
+"RESET": SubResource("Animation_cm2mt")
+}
+
+[node name="Player" type="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.305318, 0.304759)
+shape = SubResource("RectangleShape2D_a1yro")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(9, -22.5)
+texture = ExtResource("1_qdvgu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CollisionShape2D/Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_ws25v")
+}
+autoplay = "Idle"

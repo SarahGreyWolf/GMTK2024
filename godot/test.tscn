@@ -1,5 +1,30 @@
-[gd_scene format=3 uid="uid://bk7qvjpj0mtmr"]
+[gd_scene load_steps=5 format=3 uid="uid://bk7qvjpj0mtmr"]
 
-[node name="Node3D" type="Node3D"]
+[ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="1_kph0v"]
 
-[node name="Player" type="Player" parent="."]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s0nfi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_x5tx7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hk2ft"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_kph0v")]
+jump_speed = -1000.0
+position = Vector2(0, 1)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(0, 160)
+scale = Vector2(57.76, 1)
+physics_material_override = SubResource("PhysicsMaterial_s0nfi")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="StaticBody2D"]
+position = Vector2(-3.8147e-06, 0)
+scale = Vector2(20, 20)
+mesh = SubResource("BoxMesh_x5tx7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_hk2ft")
