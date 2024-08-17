@@ -9,7 +9,6 @@ use crate::GRAVITY;
 #[class(base=CharacterBody2D)]
 struct Player {
     base: Base<CharacterBody2D>,
-    grounded: bool,
     #[export]
     jump_speed: f32,
     #[export]
@@ -23,7 +22,6 @@ impl ICharacterBody2D for Player {
 
         Self {
             base,
-            grounded: false,
             jump_speed: -500.,
             move_speed: 500.,
         }
@@ -35,9 +33,7 @@ impl ICharacterBody2D for Player {
                 "CollisionShape2D/Sprite2D/AnimationPlayer",
             );
 
-        godot_print!("{:?}", self.grounded);
-
-        if !self.grounded {
+        if !self.base_mut().is_on_floor() {
             if animation_player.get_current_animation() != "Jump".into() {
                 animation_player.set_current_animation("Jump".into());
             }
@@ -52,7 +48,7 @@ impl ICharacterBody2D for Player {
 
     fn physics_process(&mut self, delta: f64) {
         let velocity = self.base().get_velocity();
-        if !self.grounded {
+        if !self.base_mut().is_on_floor() {
             self.base_mut().set_velocity(
                 velocity + Vector2::new(0., GRAVITY * real::from_f64(delta)),
             );
@@ -61,11 +57,9 @@ impl ICharacterBody2D for Player {
         self.handle_input();
 
         let collided = self.base_mut().move_and_slide();
-
-        self.grounded = collided;
     }
 
-    fn input(&mut self, event: Gd<InputEvent>) {}
+    fn ready(&mut self) {}
 }
 
 impl Player {
@@ -94,7 +88,7 @@ impl Player {
                 .set_scale(Vector2::new(scale.x * -1., scale.y));
         }
 
-        if jump && self.grounded {
+        if jump && self.base_mut().is_on_floor() {
             velocity.y = self.jump_speed;
         }
 
