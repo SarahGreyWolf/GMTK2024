@@ -1,5 +1,5 @@
 use godot::classes::{
-    AnimationPlayer, CharacterBody2D, ICharacterBody2D, Input, InputEvent,
+    AnimationPlayer, CharacterBody2D, ICharacterBody2D, Input,
 };
 use godot::prelude::*;
 
@@ -25,7 +25,7 @@ impl ICharacterBody2D for Player {
         }
     }
 
-    fn process(&mut self, delta: f64) {
+    fn process(&mut self, _delta: f64) {
         let mut animation_player =
             self.base_mut().get_node_as::<AnimationPlayer>(
                 "CollisionShape2D/Sprite2D/AnimationPlayer",
@@ -54,7 +54,7 @@ impl ICharacterBody2D for Player {
 
         self.handle_input();
 
-        let collided = self.base_mut().move_and_slide();
+        let _collided = self.base_mut().move_and_slide();
     }
 
     fn ready(&mut self) {}
