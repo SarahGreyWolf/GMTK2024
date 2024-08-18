@@ -1,5 +1,5 @@
 use godot::classes::{
-    self, AnimationPlayer, CharacterBody2D, ICharacterBody2D, InputEvent,
+    AnimationPlayer, CharacterBody2D, ICharacterBody2D, Input, InputEvent,
 };
 use godot::prelude::*;
 
@@ -18,8 +18,6 @@ struct Player {
 #[godot_api]
 impl ICharacterBody2D for Player {
     fn init(base: Base<CharacterBody2D>) -> Self {
-        godot_print!("Hello, World!");
-
         Self {
             base,
             jump_speed: -500.,
@@ -62,9 +60,19 @@ impl ICharacterBody2D for Player {
     fn ready(&mut self) {}
 }
 
+#[godot_api]
 impl Player {
+    #[signal]
+    fn game_over();
+
+    #[func]
+    fn kill(mut player: Gd<Node>) {
+        player.emit_signal("game_over".into(), &[]);
+        player.queue_free();
+    }
+
     fn handle_input(&mut self) {
-        let input = classes::Input::singleton();
+        let input = Input::singleton();
 
         let transform = self.base().get_transform();
         let scale = self.base().get_scale();
@@ -78,12 +86,12 @@ impl Player {
         let right = input.is_action_pressed("MoveRight".into());
         let jump = input.is_action_pressed("Jump".into());
 
-        if left && transform.scale().y > 0. {
+        if (left && transform.scale().y > 0.) && !right {
             self.base_mut()
                 .set_scale(Vector2::new(scale.x * -1., scale.y));
         }
 
-        if right && transform.scale().y < 0. {
+        if (right && transform.scale().y < 0.) && !left {
             self.base_mut()
                 .set_scale(Vector2::new(scale.x * -1., scale.y));
         }

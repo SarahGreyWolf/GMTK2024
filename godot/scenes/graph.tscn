@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3vqsamymud23"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqgjb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cdksa"]
+
+[sub_resource type="Gradient" id="Gradient_03iku"]
+offsets = PackedFloat32Array(0.987952, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_425lp"]
+gradient = SubResource("Gradient_03iku")
+
+[node name="Graph" type="Graph"]
+inner = "Point"
+
+[node name="XLine" type="StaticBody2D" parent="."]
+position = Vector2(201, 1)
+scale = Vector2(50, 0.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="XLine"]
+shape = SubResource("RectangleShape2D_rqgjb")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="XLine"]
+scale = Vector2(20.0226, 19.9697)
+mesh = SubResource("BoxMesh_cdksa")
+texture = SubResource("GradientTexture1D_425lp")
+
+[node name="YLine" type="StaticBody2D" parent="."]
+position = Vector2(-300, -296)
+scale = Vector2(0.25, 30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YLine"]
+shape = SubResource("RectangleShape2D_rqgjb")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="YLine"]
+scale = Vector2(20.0226, 19.9697)
+mesh = SubResource("BoxMesh_cdksa")
+texture = SubResource("GradientTexture1D_425lp")
