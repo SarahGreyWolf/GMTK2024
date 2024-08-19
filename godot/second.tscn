@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://xmochljluo5o"]
+
+[ext_resource type="PackedScene" uid="uid://b3vqsamymud23" path="res://scenes/graph.tscn" id="1_ypn0v"]
+[ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="2_26qbx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fy50"]
+
+[node name="Second" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Graph" parent="." instance=ExtResource("1_ypn0v")]
+position = Vector2(-53, 250)
+scale = Vector2(0.907, 0.907)
+
+[node name="BarGraph" type="BarGraph" parent="Graph"]
+bar_heights = Array[float]([10.0])
+
+[node name="Player" parent="." instance=ExtResource("2_26qbx")]
+position = Vector2(-485, 211)
+scale = Vector2(0.422, 0.422)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, 294)
+scale = Vector2(116.62, 3)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7fy50")

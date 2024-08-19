@@ -1,8 +1,10 @@
 use godot::classes::{
-    AnimationPlayer, CharacterBody2D, ICharacterBody2D, Input,
+    AnimationPlayer, Area2D, CharacterBody2D, ICharacterBody2D, Input,
+    InputEvent,
 };
 use godot::prelude::*;
 
+use super::door::Door;
 use crate::GRAVITY;
 
 #[derive(GodotClass)]
@@ -20,8 +22,8 @@ impl ICharacterBody2D for Player {
     fn init(base: Base<CharacterBody2D>) -> Self {
         Self {
             base,
-            jump_speed: -500.,
-            move_speed: 500.,
+            jump_speed: -300.,
+            move_speed: 250.,
         }
     }
 
@@ -58,6 +60,23 @@ impl ICharacterBody2D for Player {
     }
 
     fn ready(&mut self) {}
+
+    fn input(&mut self, event: Gd<InputEvent>) {
+        if event.is_action_pressed("Interact".into()) {
+            let interact =
+                self.base().get_node_as::<Area2D>("InteractCollider");
+            let bodies = interact.get_overlapping_areas();
+            for body in bodies.iter_shared() {
+                if body.is_class("Door".into()) {
+                    let Ok(mut door) = body.try_cast::<Door>() else {
+                        godot_error!("Could not cast a Door to a Door?");
+                        continue;
+                    };
+                    door.call("enter_door".into(), &[]);
+                }
+            }
+        }
+    }
 }
 
 #[godot_api]

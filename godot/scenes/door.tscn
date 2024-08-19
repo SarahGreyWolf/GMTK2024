@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://crm2anwiy6jn0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yknmm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yuhis"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_s4kf7"]
+
+[node name="Door" type="Door"]
+scale = Vector2(1.75, 2.942)
+collision_layer = 2
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yknmm")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+scale = Vector2(20, 20)
+mesh = SubResource("BoxMesh_yuhis")
+texture = SubResource("PlaceholderTexture2D_s4kf7")

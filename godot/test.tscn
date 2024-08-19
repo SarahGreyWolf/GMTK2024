@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bk7qvjpj0mtmr"]
+[gd_scene load_steps=6 format=3 uid="uid://bk7qvjpj0mtmr"]
 
+[ext_resource type="PackedScene" uid="uid://crm2anwiy6jn0" path="res://scenes/door.tscn" id="1_evjk7"]
 [ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="1_kph0v"]
 [ext_resource type="PackedScene" uid="uid://b3vqsamymud23" path="res://scenes/graph.tscn" id="2_oxi2t"]
+[ext_resource type="PackedScene" uid="uid://xmochljluo5o" path="res://second.tscn" id="2_pg4oj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0jvno"]
 
@@ -9,14 +11,9 @@
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("1_kph0v")]
-jump_speed = -300.0
-move_speed = 250.0
-position = Vector2(-487, 217)
-scale = Vector2(0.422139, 0.422139)
-slide_on_ceiling = false
-wall_min_slide_angle = 0.785398
-floor_stop_on_slope = false
+[node name="Door" parent="." instance=ExtResource("1_evjk7")]
+dest_scene = ExtResource("2_pg4oj")
+position = Vector2(-487, 218)
 
 [node name="Graph" parent="." instance=ExtResource("2_oxi2t")]
 position = Vector2(-53, 250)
@@ -29,9 +26,16 @@ bar_heights = Array[float]([1.0, 3.0, 5.0, 7.0, 9.0])
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(0, 294)
 scale = Vector2(116.62, 3)
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_0jvno")
+
+[node name="Player" parent="." instance=ExtResource("1_kph0v")]
+position = Vector2(-487, 217)
+scale = Vector2(0.422139, 0.422139)
+slide_on_ceiling = false
+wall_min_slide_angle = 0.785398
+floor_stop_on_slope = false
 
 [connection signal="body_entered" from="Area2D" to="Player" method="kill"]

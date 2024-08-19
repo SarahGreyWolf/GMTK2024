@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://kmq1yajx4ula"]
+[gd_scene load_steps=10 format=3 uid="uid://kmq1yajx4ula"]
 
 [ext_resource type="Texture2D" uid="uid://cxgsg3055g8b" path="res://textures/player/guy1.png" id="1_qdvgu"]
 [ext_resource type="Texture2D" uid="uid://bwho1ytugkt8d" path="res://textures/player/guy2.png" id="2_fkndo"]
@@ -62,7 +62,10 @@ _data = {
 "RESET": SubResource("Animation_cm2mt")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fh5is"]
+
 [node name="Player" type="Player"]
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.305318, 0.304759)
@@ -77,3 +80,12 @@ libraries = {
 "": SubResource("AnimationLibrary_ws25v")
 }
 autoplay = "Idle"
+
+[node name="InteractCollider" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractCollider"]
+position = Vector2(0, 62)
+shape = SubResource("RectangleShape2D_fh5is")
