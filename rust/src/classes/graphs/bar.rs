@@ -75,7 +75,7 @@ impl BarGraph {
 
         let positions = size.x / self.bar_heights.len() as f32;
 
-        let mut bar = Bar::create_with_height(height);
+        let mut bar = Bar::create_with_height_and_index(index, height);
 
         let half_spacing = self.spacing / 2.;
 
@@ -104,12 +104,19 @@ impl BarGraph {
 #[class(base=StaticBody2D)]
 pub struct Bar {
     base: Base<StaticBody2D>,
+    index: u32,
     height: f32,
 }
 
 #[godot_api]
 impl IStaticBody2D for Bar {
-    fn init(base: Base<StaticBody2D>) -> Self { Self { base, height: 1. } }
+    fn init(base: Base<StaticBody2D>) -> Self {
+        Self {
+            base,
+            height: 1.,
+            index: 0,
+        }
+    }
 
     fn ready(&mut self) {
         let mut coll_shape = CollisionShape2D::new_alloc();
@@ -166,7 +173,11 @@ impl Bar {
         object.translate(Vector2::new(0.0, -height / -0.08));
     }
 
-    fn create_with_height(height: f32) -> Gd<Self> {
-        Gd::from_init_fn(|base| Self { base, height })
+    fn create_with_height_and_index(index: u32, height: f32) -> Gd<Self> {
+        Gd::from_init_fn(|base| Self {
+            base,
+            height,
+            index,
+        })
     }
 }
