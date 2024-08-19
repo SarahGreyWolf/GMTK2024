@@ -77,11 +77,19 @@ impl BarGraph {
 
         let mut bar = Bar::create_with_height_and_index(index, height);
 
+        {
+            let graph_transform = self.base().get_transform();
+            let mut bar_transform = bar.get_transform();
+            bar_transform.origin = graph_transform.origin;
+            bar_transform.origin.y -= 14.0;
+            bar.set_transform(bar_transform);
+        }
+
         let half_spacing = self.spacing / 2.;
 
         bar.translate(Vector2::new(
             (-400. - half_spacing) + (positions * index as f32) + half_spacing,
-            -14.,
+            0.,
         ));
         let scale = bar.get_scale();
         if self.bar_heights.len() > 10 {
@@ -113,8 +121,8 @@ impl IStaticBody2D for Bar {
     fn init(base: Base<StaticBody2D>) -> Self {
         Self {
             base,
-            height: 1.,
             index: 0,
+            height: 1.,
         }
     }
 
