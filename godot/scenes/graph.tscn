@@ -19,6 +19,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_wftkd")
 
 [node name="Graph" type="Graph"]
+scale = Vector2(0.907, 0.86)
 
 [node name="XLine" type="StaticBody2D" parent="."]
 position = Vector2(0, 1)
