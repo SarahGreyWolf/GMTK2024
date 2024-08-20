@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://c403gaboq4jxp"]
+
+[ext_resource type="Texture2D" uid="uid://dqwukvhck56s3" path="res://textures/graph_credits.jpg" id="1_sou4b"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Credits" type="Credits" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GraphCredits" type="Sprite2D" parent="Credits"]
+position = Vector2(-16, -31)
+scale = Vector2(0.188684, 0.100875)
+texture = ExtResource("1_sou4b")
+
+[node name="Camera2D" type="Camera2D" parent="Credits"]
+scale = Vector2(0.554896, 0.504249)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Credits"]
+layout_mode = 0
+offset_left = -243.0
+offset_top = -118.0
+offset_right = -103.0
+offset_bottom = 20.0
+bbcode_enabled = true
+text = "[color=Purple]SarahGreyWolf[/color]
+[color=Black]Programming
+Level Design
+Design
+Background Art
+[/color]"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Credits"]
+offset_left = 219.0
+offset_top = -190.0
+offset_right = 379.0
+offset_bottom = -75.0
+bbcode_enabled = true
+text = "[color=Green]Donny Downer[/color]
+[color=Black]Design
+Art
+Emotional Support
+[/color]"
+fit_content = true
+
+[node name="Button" type="Button" parent="Credits"]
+layout_mode = 0
+offset_left = -488.0
+offset_top = -313.0
+offset_right = -335.0
+offset_bottom = -282.0
+scale = Vector2(1.49361, 1.40914)
+text = "Back to MainMenu"
+
+[connection signal="pressed" from="Credits/Button" to="Credits" method="main_menu"]

@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjtsehhaysi2k"]
+
+[ext_resource type="Texture2D" uid="uid://begdt8lybgsn6" path="res://textures/title.png" id="1_i5g47"]
+[ext_resource type="Texture2D" uid="uid://c63oy3gngqa3w" path="res://textures/graph.jpg" id="1_udt0i"]
+[ext_resource type="PackedScene" uid="uid://c403gaboq4jxp" path="res://scenes/credits.tscn" id="2_kqwwt"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="MainMenu" type="MainMenu" parent="."]
+credits = ExtResource("2_kqwwt")
+offset_left = -575.0
+offset_top = -324.0
+offset_right = -535.0
+offset_bottom = -284.0
+scale = Vector2(28.7446, 16.1809)
+
+[node name="Graph" type="Sprite2D" parent="MainMenu"]
+position = Vector2(25.7092, 19.7764)
+scale = Vector2(0.00490245, 0.00490245)
+texture = ExtResource("1_udt0i")
+
+[node name="Sprite2D" type="Sprite2D" parent="MainMenu"]
+position = Vector2(18.7514, 8.46677)
+rotation = 1.5708
+scale = Vector2(-0.0113362, -0.0113362)
+texture = ExtResource("1_i5g47")
+
+[node name="Start" type="Button" parent="MainMenu"]
+layout_mode = 0
+offset_left = 6.99262
+offset_top = 18.1078
+offset_right = 14.9926
+offset_bottom = 26.1078
+scale = Vector2(0.786212, 2.7551)
+flat = true
+
+[node name="Credits" type="Button" parent="MainMenu"]
+offset_left = 18.9253
+offset_top = 14.7705
+offset_right = 26.9253
+offset_bottom = 22.7705
+scale = Vector2(0.786212, 2.7551)
+flat = true
+
+[node name="Exit" type="Button" parent="MainMenu"]
+offset_left = 30.9624
+offset_top = 21.136
+offset_right = 38.9624
+offset_bottom = 29.136
+scale = Vector2(0.713299, 1.86297)
+flat = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="pressed" from="MainMenu/Start" to="MainMenu" method="start_game"]
+[connection signal="pressed" from="MainMenu/Credits" to="MainMenu" method="credits"]
+[connection signal="pressed" from="MainMenu/Exit" to="MainMenu" method="exit"]
