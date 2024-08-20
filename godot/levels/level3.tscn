@@ -1,0 +1,96 @@
+[gd_scene load_steps=16 format=3 uid="uid://bwsm2bkow7528"]
+
+[ext_resource type="Texture2D" uid="uid://c4fikubun1yhv" path="res://textures/background.png" id="1_trr7i"]
+[ext_resource type="PackedScene" uid="uid://crm2anwiy6jn0" path="res://scenes/door.tscn" id="2_ykt7f"]
+[ext_resource type="PackedScene" uid="uid://b3vqsamymud23" path="res://scenes/graph.tscn" id="4_3ph82"]
+[ext_resource type="PackedScene" uid="uid://bmyg0pkrddtnq" path="res://scenes/killplane.tscn" id="5_q63sy"]
+[ext_resource type="PackedScene" uid="uid://4r7v41vif6gt" path="res://levels/level4.tscn" id="5_ysvoo"]
+[ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="6_v6pvt"]
+
+[sub_resource type="BarDetails" id="BarDetails_s5caj"]
+height = 1.0
+
+[sub_resource type="BarDetails" id="BarDetails_n0wxe"]
+height = 3.0
+
+[sub_resource type="BarDetails" id="BarDetails_3x8bt"]
+height = 5.0
+
+[sub_resource type="BarDetails" id="BarDetails_pi5py"]
+height = 7.0
+
+[sub_resource type="BarDetails" id="BarDetails_qgtvi"]
+height = 4.0
+
+[sub_resource type="BarDetails" id="BarDetails_i2ry0"]
+height = 2.0
+
+[sub_resource type="BarDetails" id="BarDetails_x1asu"]
+height = 3.0
+
+[sub_resource type="BarDetails" id="BarDetails_0fhh5"]
+height = 5.0
+
+[sub_resource type="BarDetails" id="BarDetails_t8pgi"]
+height = 7.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-57, -63)
+scale = Vector2(0.281356, 0.268541)
+texture = ExtResource("1_trr7i")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Graph" parent="." instance=ExtResource("4_3ph82")]
+position = Vector2(-51, 257)
+
+[node name="BarGraph" type="BarGraph" parent="Graph"]
+spacing = 5.0
+bar_details = Array[BarDetails]([SubResource("BarDetails_s5caj"), SubResource("BarDetails_n0wxe"), SubResource("BarDetails_3x8bt"), SubResource("BarDetails_pi5py"), SubResource("BarDetails_qgtvi"), SubResource("BarDetails_i2ry0"), SubResource("BarDetails_x1asu"), SubResource("BarDetails_0fhh5"), SubResource("BarDetails_t8pgi")])
+
+[node name="KillPlane" parent="." instance=ExtResource("5_q63sy")]
+
+[node name="Door" parent="." instance=ExtResource("2_ykt7f")]
+dest_scene = ExtResource("5_ysvoo")
+position = Vector2(359, 55)
+
+[node name="Player" parent="." instance=ExtResource("6_v6pvt")]
+position = Vector2(-484, 219)
+
+[node name="Information" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Goal" type="RichTextLabel" parent="Information"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 21.0
+offset_top = 40.0
+offset_right = 201.0
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.850849, 0.801958)
+bbcode_enabled = true
+text = "[center]Watch your step, you might not always be able to go back.
+[/center]"
+fit_content = true
+scroll_active = false
+
+[connection signal="body_entered" from="KillPlane" to="Player" method="kill"]

@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://g7u44snnvr6l"]
+
+[ext_resource type="Texture2D" uid="uid://c4fikubun1yhv" path="res://textures/background.png" id="1_ht6fh"]
+[ext_resource type="PackedScene" uid="uid://b3vqsamymud23" path="res://scenes/graph.tscn" id="1_xdmj4"]
+[ext_resource type="PackedScene" uid="uid://bmyg0pkrddtnq" path="res://scenes/killplane.tscn" id="2_emt7h"]
+[ext_resource type="PackedScene" uid="uid://crm2anwiy6jn0" path="res://scenes/door.tscn" id="3_vjmy0"]
+[ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="4_khird"]
+[ext_resource type="PackedScene" uid="uid://bwsm2bkow7528" path="res://levels/level3.tscn" id="5_k8vqa"]
+
+[sub_resource type="BarDetails" id="BarDetails_ckpvi"]
+name = "A"
+height = 1.0
+
+[sub_resource type="BarDetails" id="BarDetails_ij2m4"]
+name = "B"
+height = 3.0
+
+[sub_resource type="BarDetails" id="BarDetails_o2vp2"]
+name = "C"
+height = 5.0
+
+[sub_resource type="BarDetails" id="BarDetails_aq807"]
+name = "D"
+height = 7.0
+
+[sub_resource type="BarDetails" id="BarDetails_tvx4c"]
+name = "E"
+height = 9.0
+
+[node name="Level2" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-57, -63)
+scale = Vector2(0.281356, 0.268541)
+texture = ExtResource("1_ht6fh")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Graph" parent="." instance=ExtResource("1_xdmj4")]
+position = Vector2(-51, 257)
+
+[node name="BarGraph" type="BarGraph" parent="Graph"]
+spacing = 5.0
+bar_details = Array[BarDetails]([SubResource("BarDetails_ckpvi"), SubResource("BarDetails_ij2m4"), SubResource("BarDetails_o2vp2"), SubResource("BarDetails_aq807"), SubResource("BarDetails_tvx4c")])
+
+[node name="KillPlane" parent="." instance=ExtResource("2_emt7h")]
+
+[node name="Door" parent="." instance=ExtResource("3_vjmy0")]
+dest_scene = ExtResource("5_k8vqa")
+position = Vector2(250, 4)
+
+[node name="Player" parent="." instance=ExtResource("4_khird")]
+position = Vector2(-484, 219)
+
+[node name="Information" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Goal" type="RichTextLabel" parent="Information"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = -52.0
+offset_right = -11.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.787234, 0.723077)
+bbcode_enabled = true
+text = "[center]
+The goal of every level is to scale the graphs to reach the exit.
+[/center]"
+fit_content = true
+scroll_active = false
+
+[connection signal="body_entered" from="KillPlane" to="Player" method="kill"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmyg0pkrddtnq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0jvno"]
+
+[node name="KillPlane" type="Area2D"]
+position = Vector2(0, 294)
+scale = Vector2(116.62, 3)
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0jvno")

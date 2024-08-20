@@ -1,0 +1,147 @@
+[gd_scene load_steps=13 format=3 uid="uid://4r7v41vif6gt"]
+
+[ext_resource type="Texture2D" uid="uid://c4fikubun1yhv" path="res://textures/background.png" id="1_trr7i"]
+[ext_resource type="PackedScene" uid="uid://crm2anwiy6jn0" path="res://scenes/door.tscn" id="2_ykt7f"]
+[ext_resource type="PackedScene" uid="uid://bws6aihs81mjr" path="res://levels/level5.tscn" id="3_vqhjj"]
+[ext_resource type="PackedScene" uid="uid://b3vqsamymud23" path="res://scenes/graph.tscn" id="4_3ph82"]
+[ext_resource type="PackedScene" uid="uid://bmyg0pkrddtnq" path="res://scenes/killplane.tscn" id="5_q63sy"]
+[ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="6_v6pvt"]
+[ext_resource type="PackedScene" uid="uid://cmn10ex2jbl0h" path="res://scenes/minigames/signing.tscn" id="7_iuax8"]
+[ext_resource type="PackedScene" uid="uid://dqwjt83vjq3lt" path="res://scenes/minigames/bar_controller.tscn" id="8_vpbfl"]
+
+[sub_resource type="BarDetails" id="BarDetails_f0816"]
+name = "Celebrity A"
+height = 2.0
+
+[sub_resource type="BarDetails" id="BarDetails_8v123"]
+name = "Celebrity B"
+height = 4.0
+
+[sub_resource type="BarDetails" id="BarDetails_tnw13"]
+name = "Celebrity C"
+height = 1.0
+
+[sub_resource type="BarDetails" id="BarDetails_fbfy4"]
+name = "Celebrity D"
+height = 3.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-230, -66)
+rotation = 0.0124028
+scale = Vector2(-0.334338, -0.319111)
+texture = ExtResource("1_trr7i")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Door" parent="." instance=ExtResource("2_ykt7f")]
+dest_scene = ExtResource("3_vqhjj")
+position = Vector2(331, -21)
+
+[node name="Graph" parent="." instance=ExtResource("4_3ph82")]
+position = Vector2(-51, 257)
+
+[node name="BarGraph" type="BarGraph" parent="Graph"]
+offset = 100.0
+spacing = 10.0
+bar_details = Array[BarDetails]([SubResource("BarDetails_f0816"), SubResource("BarDetails_8v123"), SubResource("BarDetails_tnw13"), SubResource("BarDetails_fbfy4")])
+
+[node name="KillPlane" parent="." instance=ExtResource("5_q63sy")]
+
+[node name="Player" parent="." instance=ExtResource("6_v6pvt")]
+position = Vector2(-482, 220)
+
+[node name="MiniGame" parent="." instance=ExtResource("7_iuax8")]
+position = Vector2(458, -213)
+
+[node name="BarController" parent="MiniGame" instance=ExtResource("8_vpbfl")]
+bar_index = 0
+count = 2
+minimum = 2
+position = Vector2(84, 49)
+rotation = -0.435649
+scale = Vector2(1.62171, 1.92923)
+
+[node name="BarController2" parent="MiniGame" instance=ExtResource("8_vpbfl")]
+bar_index = 1
+count = 4
+minimum = 4
+position = Vector2(66, 10)
+rotation = -0.420436
+scale = Vector2(1.29127, 1.34537)
+
+[node name="BarController3" parent="MiniGame" instance=ExtResource("8_vpbfl")]
+bar_index = 2
+count = 1
+minimum = 1
+position = Vector2(47, -18)
+rotation = -0.495069
+scale = Vector2(1.17352, 1.12895)
+
+[node name="BarController4" parent="MiniGame" instance=ExtResource("8_vpbfl")]
+bar_index = 3
+count = 3
+minimum = 3
+maximum = 11
+position = Vector2(29, -43)
+rotation = -0.549334
+
+[node name="Information" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Goal" type="RichTextLabel" parent="Information"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -387.0
+offset_top = 45.0
+offset_right = -207.0
+offset_bottom = 137.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.787234, 0.723077)
+bbcode_enabled = true
+text = "[center]
+Sometimes you'll need to manipulate the bars to reach the exit.
+[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Information"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = -200.0
+offset_right = 320.0
+offset_bottom = -85.0
+bbcode_enabled = true
+text = "[center]This Graph seems to represent the people queueing to meet their favourite celebrity.[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Information"]
+layout_mode = 0
+offset_left = 392.0
+offset_top = -78.0
+offset_right = 592.0
+offset_bottom = 37.0
+bbcode_enabled = true
+text = "[center]Try Left & Right clicking each Celebrities table.[/center]"
+fit_content = true
+scroll_active = false
+
+[connection signal="body_entered" from="KillPlane" to="Player" method="kill"]

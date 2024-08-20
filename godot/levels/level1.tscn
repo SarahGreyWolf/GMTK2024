@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=3 uid="uid://tuxcdvkimwyx"]
+
+[ext_resource type="Texture2D" uid="uid://c4fikubun1yhv" path="res://textures/background.png" id="1_g3vvn"]
+[ext_resource type="PackedScene" uid="uid://b3vqsamymud23" path="res://scenes/graph.tscn" id="1_rhom6"]
+[ext_resource type="PackedScene" uid="uid://kmq1yajx4ula" path="res://scenes/player.tscn" id="2_30vv5"]
+[ext_resource type="PackedScene" uid="uid://bmyg0pkrddtnq" path="res://scenes/killplane.tscn" id="3_2wg65"]
+[ext_resource type="PackedScene" uid="uid://crm2anwiy6jn0" path="res://scenes/door.tscn" id="4_1xks3"]
+[ext_resource type="PackedScene" uid="uid://g7u44snnvr6l" path="res://levels/level2.tscn" id="4_tr5ov"]
+
+[sub_resource type="BarDetails" id="BarDetails_jbgsi"]
+height = 1.0
+
+[sub_resource type="BarDetails" id="BarDetails_u5gs3"]
+height = 0.5
+
+[sub_resource type="BarDetails" id="BarDetails_2tahl"]
+height = 0.25
+
+[node name="Level1" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.999992, -41)
+rotation = 3.14159
+scale = Vector2(-0.235545, -0.224817)
+texture = ExtResource("1_g3vvn")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Door" parent="." instance=ExtResource("4_1xks3")]
+dest_scene = ExtResource("4_tr5ov")
+position = Vector2(254, 194)
+
+[node name="Graph" parent="." instance=ExtResource("1_rhom6")]
+position = Vector2(-51, 257)
+
+[node name="BarGraph" type="BarGraph" parent="Graph"]
+offset = 100.0
+spacing = 10.0
+bar_details = Array[BarDetails]([SubResource("BarDetails_jbgsi"), SubResource("BarDetails_u5gs3"), SubResource("BarDetails_2tahl")])
+
+[node name="KillPlane" parent="." instance=ExtResource("3_2wg65")]
+
+[node name="Player" parent="." instance=ExtResource("2_30vv5")]
+position = Vector2(-482, 220)
+
+[node name="Information" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Welcome" type="RichTextLabel" parent="Information"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -471.0
+offset_top = 60.0
+offset_right = -291.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.865436, 0.885769)
+bbcode_enabled = true
+text = "[center]Welcome to
+Economy to Scale[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Movement" type="RichTextLabel" parent="Information"]
+layout_mode = 0
+offset_left = -246.0
+offset_top = 63.0
+offset_right = -46.0
+offset_bottom = 178.0
+bbcode_enabled = true
+text = "[center]Move Left & Right: A & D
+Jump: W or Space
+Interact: S or Enter
+Reset: R
+[/center]"
+fit_content = true
+scroll_active = false
+
+[connection signal="body_entered" from="KillPlane" to="Player" method="kill"]
