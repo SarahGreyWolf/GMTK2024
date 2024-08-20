@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqwjt83vjq3lt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dxkuf"]
+
+[node name="BarController" type="BarController"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dxkuf")
+
+[connection signal="input_event" from="." to="." method="input_event"]

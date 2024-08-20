@@ -62,6 +62,7 @@ impl INode2D for BarGraph {
     }
 }
 
+#[godot_api]
 impl BarGraph {
     fn create_bar(&mut self, index: u32, mut details: Gd<BarDetails>) {
         let Some(graph) = self.base().get_parent() else {
@@ -123,6 +124,32 @@ impl BarGraph {
         } else {
             node.set_scale(scale + Vector2::new(2., 0.));
         }
+    }
+
+    #[func]
+    fn increase_bar(&mut self, index: u32, amount: u32) {
+        let bars = self.base().get_children();
+        let Some(bar) = bars.get(index as usize) else {
+            godot_error!("Could not get bar with Index {}", index);
+            return;
+        };
+
+        let bar = bar.try_cast::<Bar>().unwrap();
+
+        Bar::increase_height(bar, amount as f32 * 0.25);
+    }
+
+    #[func]
+    fn set_bar_height(&mut self, index: u32, amount: u32) {
+        let bars = self.base().get_children();
+        let Some(bar) = bars.get(index as usize) else {
+            godot_error!("Could not get bar with Index {}", index);
+            return;
+        };
+
+        let bar = bar.try_cast::<Bar>().unwrap();
+
+        Bar::set_height(bar, amount as f32);
     }
 }
 
@@ -238,6 +265,23 @@ impl IStaticBody2D for Bar {
 
 #[godot_api]
 impl Bar {
+    #[func]
+    fn set_height(mut object: Gd<Self>, height: f32) {
+        let Some(node) = object.get_child(0) else {
+            godot_error!("Could not get first child of Bar");
+            return;
+        };
+        let mut node = node.try_cast::<StaticBody2D>().unwrap();
+        let mut scale = node.get_scale();
+        scale.y = height;
+        node.set_scale(scale);
+        let mut pos = node.get_position();
+        pos.y = 0.;
+        node.set_position(pos);
+        let mut transform = node.get_transform();
+        node.translate(Vector2::new(0.0, (height - 1.) / -0.08));
+    }
+
     #[func]
     fn increase_height(mut object: Gd<Self>, height: f32) {
         let Some(node) = object.get_child(0) else {

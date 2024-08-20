@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmn10ex2jbl0h"]
+
+[ext_resource type="Texture2D" uid="uid://chlpgk0svc3gn" path="res://textures/convention.jpg" id="1_ayvso"]
+
+[node name="MiniGame" type="MiniGame"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.10844, 0.10844)
+texture = ExtResource("1_ayvso")
