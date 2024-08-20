@@ -15,6 +15,8 @@ struct Player {
     jump_speed: f32,
     #[export]
     move_speed: f32,
+    #[export]
+    has_key: bool,
 }
 
 #[godot_api]
@@ -24,6 +26,7 @@ impl ICharacterBody2D for Player {
             base,
             jump_speed: -300.,
             move_speed: 250.,
+            has_key: false,
         }
     }
 
@@ -72,9 +75,21 @@ impl ICharacterBody2D for Player {
                         godot_error!("Could not cast a Door to a Door?");
                         continue;
                     };
-                    door.call("enter_door".into(), &[]);
+                    let is_locked: bool =
+                        door.call("get_locked".into(), &[]).to();
+                    if is_locked {
+                        if !self.has_key {
+                            return;
+                        }
+                        door.call("enter_door".into(), &[]);
+                    } else {
+                        door.call("enter_door".into(), &[]);
+                    }
                 }
             }
+        }
+        if event.is_action_pressed("Reset".into()) {
+            self.base().get_tree().unwrap().reload_current_scene();
         }
     }
 }
@@ -87,7 +102,25 @@ impl Player {
     #[func]
     fn kill(mut player: Gd<Node>) {
         player.emit_signal("game_over".into(), &[]);
-        player.queue_free();
+        player.get_tree().unwrap().reload_current_scene();
+    }
+
+    #[func]
+    fn pickup_key(body: Gd<Node>) {
+        let body_clone = body.clone();
+        let Ok(mut player) = body_clone.try_cast::<Player>() else {
+            return;
+        };
+        player.call("set_has_key".into(), &[Variant::from(true)]);
+        let Some(tree) = body.get_tree() else {
+            godot_error!("Could not get tree");
+            return;
+        };
+        let Some(root) = tree.get_root() else {
+            godot_error!("Could not get root");
+            return;
+        };
+        root.get_node_as::<Area2D>("Node2D/Key").queue_free();
     }
 
     fn handle_input(&mut self) {

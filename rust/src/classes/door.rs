@@ -9,6 +9,8 @@ pub struct Door {
     base: Base<Area2D>,
     #[export]
     dest_scene: Option<Gd<PackedScene>>,
+    #[export]
+    locked: bool,
 }
 
 #[godot_api]
@@ -17,6 +19,7 @@ impl IArea2D for Door {
         Self {
             base,
             dest_scene: None,
+            locked: false,
         }
     }
 }
